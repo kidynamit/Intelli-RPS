@@ -15,14 +15,12 @@ public class PredictionEngine
 	double NB_WEIGHT, FB_WEIGHT, ANN_WEIGHT;
 
 	File dataFile;	/** Handle to file holding the game data */
-	
 	/**
 	 * Container for all historical game data (courtesy of Shawn Bayern)
 	 * Maps concatenation of player and computer histories to counts of players' next
 	 * move at that game state (in previous played matches)
 	 */
 	HashMap<String, int[]> data;
-	
 	ArrayList<Datapoint> testPoints;
 	ArrayList<Datapoint> testData;
 

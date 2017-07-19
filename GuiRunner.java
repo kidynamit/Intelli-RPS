@@ -212,7 +212,7 @@ public class GuiRunner extends JPanel implements ActionListener {
 		{
 			ties++;
 		}
-		double percent = wins / (wins + losses);
+		double percent = wins / (wins + losses) * 100.0;	
 		String s = String.format("Win/Loss: %2.2f%% (%d-%d-%d/%d)", percent, (int) wins, (int) ties, (int) losses, (int) games);
 		stats.setText(s);
 	}
