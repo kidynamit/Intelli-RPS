@@ -13,10 +13,12 @@ public class Play
 		try {
 			BufferedReader bufferReader = new BufferedReader(new InputStreamReader(System.in));
             engine = new PredictionEngine();
-            playerHistory = bufferReader.readLine();
-            computerHistory = bufferReader.readLine();
+            String text = bufferReader.readLine();
+            String[] tokens = text.split("\\s");
+            playerHistory = tokens[0];
+            computerHistory = tokens[1];
             char compMove = engine.determineOptimalMove(playerHistory, computerHistory);
-            String playerMove = bufferReader.readLine();
+            String playerMove = tokens[2];
             char winner = engine.determineWinner(playerMove.charAt(0), compMove);
             System.out.print(compMove + " " + winner );
 		} catch(IOException e) {
