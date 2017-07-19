@@ -9,8 +9,8 @@ def read_main():
         line = p.stdout.readline()
 def write_main():
     p = subprocess.Popen(["java", "Play"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    line, err= p.communicate(input='RRR\nPPP\n'.encode())
+    line, err= p.communicate(input='RRR\nPPP\nR\n'.encode())
     print(line.decode())
-
+    p.kill()
 if __name__ == '__main__': 
     write_main()

@@ -16,7 +16,9 @@ public class Play
             playerHistory = bufferReader.readLine();
             computerHistory = bufferReader.readLine();
             char compMove = engine.determineOptimalMove(playerHistory, computerHistory);
-            System.out.print(compMove);
+            String playerMove = bufferReader.readLine();
+            char winner = engine.determineWinner(playerMove.charAt(0), compMove);
+            System.out.print(compMove + " " + winner );
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
