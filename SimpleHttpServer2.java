@@ -9,34 +9,30 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
-public class SimpleHttpServer2 {
+public class Server{
 
   public static void main(String[] args) throws Exception {
-    HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
-    server.createContext("/info", new InfoHandler());
-    server.createContext("/get", new GetHandler());
+    HttpServer server = HttpServer.create(new InetSocketAddress(3232), 0);
+    server.createContext("/play", new GetHandler());
     server.setExecutor(null); // creates a default executor
     server.start();
     System.out.println("The server is running");
   }
 
   // http://localhost:8000/info
-  static class InfoHandler implements HttpHandler {
-    public void handle(HttpExchange httpExchange) throws IOException {
-      String response = "Use /get?hello=word&foo=bar to see how to handle url parameters";
-      SimpleHttpServer2.writeResponse(httpExchange, response.toString());
-    }
-  }
 
   static class GetHandler implements HttpHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
       StringBuilder response = new StringBuilder();
-      Map <String,String>parms = SimpleHttpServer2.queryToMap(httpExchange.getRequestURI().getQuery());
-      response.append("<html><body>");
-      response.append("hello : " + parms.get("hello") + "<br/>");
-      response.append("foo : " + parms.get("foo") + "<br/>");
-      response.append("</body></html>");
-      SimpleHttpServer2.writeResponse(httpExchange, response.toString());
+      Map <String,String> params = Server.queryToMap(httpExchange.getRequestURI().getQuery());
+      PredictionEngine engine = new PredictionEngine();
+      String playerHistory = params.get("user");
+      String computerHistory = params.get("computer");
+      String playerMove = params.get("move");
+      char compMove = engine.determineOptimalMove(playerHistory, computerHistory); 
+      char winner = engine.determineWinner(playerMove.charAt(0), compMove);
+      response.append( compMove + " " + winner);
+      Server.writeResponse(httpExchange, response.toString());
     }
   }
 
